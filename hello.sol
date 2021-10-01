@@ -3,5 +3,5 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 contract HelloWorld {
-    string public text = "Hello World";
+    string public text = 'Hello World';
 }
