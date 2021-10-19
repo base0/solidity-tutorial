@@ -4,7 +4,6 @@ pragma solidity >=0.7.0 <0.9.0;
 
 /** 
  * simplified from a Remix example
- * https://raw.githubusercontent.com/base0/solidity-tutorial/6196b9feaefca1bfecc18511e9b591934b1b98db/ballot_simplified.sol
  */
 contract Ballot {
    
