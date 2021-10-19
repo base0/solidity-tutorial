@@ -4,15 +4,10 @@ pragma solidity >=0.7.0 <0.9.0;
 
 /** 
  * simplified from a Remix example
+ * https://raw.githubusercontent.com/base0/solidity-tutorial/6196b9feaefca1bfecc18511e9b591934b1b98db/ballot_simplified.sol
  */
 contract Ballot {
    
-    struct Voter {
-        bool hasRight;
-        bool voted;  // if true, that person already voted
-        uint vote;   // index of the voted proposal
-    }
-
     struct Proposal {
         // If you can limit the length to a certain number of bytes, 
         // always use one of bytes1 to bytes32 because they are much cheaper
@@ -20,11 +15,9 @@ contract Ballot {
         uint voteCount; // number of accumulated votes
     }
 
-    address public chairperson;
-
-    mapping(address => Voter) public voters;
-
     Proposal[] public proposals;
+
+    address public chairperson;
 
     /** 
      * @dev Create a new ballot to choose one of 'proposalNames'.
@@ -44,7 +37,15 @@ contract Ballot {
             }));
         }
     }
-    
+
+    struct Voter {
+        bool hasRight;
+        bool voted;  // if true, that person already voted
+        uint vote;   // index of the voted proposal
+    }
+
+    mapping(address => Voter) public voters;
+
     /** 
      * @dev Give 'voter' the right to vote on this ballot. May only be called by 'chairperson'.
      * @param voter address of voter
@@ -103,25 +104,5 @@ contract Ballot {
             returns (bytes32 winnerName_)
     {
         winnerName_ = proposals[winningProposal()].name;
-    }
-
-    //https://ethereum.stackexchange.com/a/59335
-    function bytes32ToString(bytes32 _bytes32) public pure returns (string memory) {
-        uint8 i = 0;
-        while (i < 32 && _bytes32[i] != 0) {
-            i++;
-        }
-        
-        bytes memory bytesArray = new bytes(i);
-        for (i = 0; i < 32 && _bytes32[i] != 0; i++) {
-            bytesArray[i] = _bytes32[i];
-        }
-        return string(bytesArray);
-    }
-    
-    function winnerName2() public view
-            returns (string memory winnerName_)
-    {
-        winnerName_ = bytes32ToString(proposals[winningProposal()].name);
     }
 }
